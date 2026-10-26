@@ -1,17 +1,18 @@
 const express = require('express');
 const db = require('./db');
 const app = express()
-const calcularIMC = require('./imc')
+const convercao = require('./temperatura')
 const port = 3000
 app.use(express.json())
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('API ESTÁ FUNCIONANDO! NÍCOLAS É LARPADOR')
 })
-app.get('/paciente', async (req, res) => {
+
+app.get('/medicao', async (req, res) => {
   try {
-    const [rows] = await db.execute('select * from pacientes');
+    const [rows] = await db.execute('select * from medicoes');
     res.status(200).json(rows);
   } catch (error) {
     res.status(500).json({
@@ -31,6 +32,7 @@ app.get('/paciente/obesidade', async (req, res) => {
     });
   }
 })
+
 app.get('/paciente/:id', async (req, res) => {
   const { id } = req.params;
 
